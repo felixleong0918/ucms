@@ -62,6 +62,8 @@ const errors = {
 const patterns = [
   [/API key not valid/i, 'API_KEY_INVALID'],
   [/database \(default\) does not exist/i, 'DATABASE_MISSING'],
+  // 全新的專案在建立資料庫之前，Firestore 會回報 API 尚未啟用。
+  [/Firestore API has not been used/i, 'DATABASE_MISSING'],
 ];
 async function request(url, options = {}) {
   let res;
