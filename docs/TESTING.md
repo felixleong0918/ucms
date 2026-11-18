@@ -104,6 +104,15 @@
 - 資料庫不存在時，讀取單一文件原本會被當成「文件不存在」，現在會回報錯誤。
 - `package.json` 的 Node.js 版本範圍由 `>=22` 改為 `>=22 <27`，避免 Vercel 自動升級到未測試過的主要版本。
 
+## 對真正的 Firebase 專案做的唯讀檢查（2026-11-18）
+
+使用者建立專案 `ucms-7a098` 並註冊 Web 應用程式後，以兩個不會寫入任何資料的請求確認專案狀態：
+
+- 讀取 `clubs`：Firestore 回報「Cloud Firestore API has not been used」，表示資料庫還沒建立。
+- 以不存在的帳號嘗試登入：Auth 回報 `CONFIGURATION_NOT_FOUND`，表示 Authentication 還沒啟用。這個回應的格式與資料層預期的一致（代碼在 `message`，沒有 `status`）。
+
+第一項原本會在畫面上顯示成「你沒有此操作的權限」，容易誤導；已補上對應，現在顯示「這個 Firebase 專案尚未建立 Firestore 資料庫」，並加入單元測試。修改後重跑：`npm run format` 無變更、`npm test` 13 / 13、`npm run build` 通過、`npm run test:integration` 11 / 11（Node.js 22）。瀏覽器檢查這次沒有重跑。
+
 ## 尚未驗證
 
 - **正式 Firebase 專案**：沒有建立。安全規則只在模擬器驗證；真正的專案上的註冊、登入與讀寫沒有實測。

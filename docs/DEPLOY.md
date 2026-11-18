@@ -90,6 +90,8 @@ npm run test:integration
    - `apiKey` → 之後填到 `FIREBASE_API_KEY`
 4. 之後想再看一次：左上角齒輪 → **Project settings** → **General** → 往下找到 **Your apps**。
 
+Console 在這個畫面會建議執行 `npm install firebase` 並貼上一段 `initializeApp` 的程式碼。**這兩件事都不用做**：這個專案透過 REST API 連接 Firebase，沒有使用 Firebase SDK，只需要上面兩個值。
+
 `apiKey` 是公開的識別碼，會出現在網頁原始碼裡，這是正常的；資料安全靠的是 `firestore.rules`。真正不能外流的是「服務帳戶金鑰」（一個 `.json` 檔），這個專案不需要它，也請不要下載或提交。
 
 ### 3.3 啟用電子郵件／密碼登入
@@ -208,7 +210,7 @@ npx firebase deploy --only firestore:rules --project <你的專案 ID>
 | Vercel 建置失敗，訊息是「設定不完整」 | 三個環境變數沒填、名稱打錯，或 `UCMS_MODE` 不是 `production` | 依訊息補上，然後 Redeploy |
 | 登入時出現「網站設定的 Firebase Web API Key 無效」 | `FIREBASE_API_KEY` 貼錯或多了空白、引號 | 回 3.2 重新複製，更新環境變數後 Redeploy |
 | 「這個 Firebase 專案尚未啟用 Authentication」或「尚未啟用『電子郵件／密碼』登入」 | 第 3.3 步沒做完 | 完成 3.3 |
-| 「這個 Firebase 專案尚未建立 Firestore 資料庫」 | 第 3.4 步沒做，或資料庫 ID 不是 `(default)` | 完成 3.4 |
+| 「這個 Firebase 專案尚未建立 Firestore 資料庫」 | 第 3.4 步沒做，或資料庫 ID 不是 `(default)` | 完成 3.4；剛建立的話等幾分鐘再試 |
 | 公開頁或登入後出現「你沒有此操作的權限，或資料未符合規則」 | 規則還是起始的全部拒絕，或 `FIREBASE_PROJECT_ID` 填成別的專案 | 完成 3.5；核對專案 ID |
 | 登入後一直是「還沒有任何社團」而且沒有「建立社團」按鈕 | `admins` 文件的 ID 和你的 UID 不一致，或建在別的集合 | 回第 5 步核對 UID（大小寫要完全相同） |
 | 登入頁出現「本機模擬器模式」 | 部署到的是模擬器設定的版本 | 確認 `UCMS_MODE=production` 後 Redeploy |

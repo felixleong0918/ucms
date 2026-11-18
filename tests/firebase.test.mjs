@@ -64,4 +64,12 @@ test('錯誤訊息：登入錯誤與正式環境設定不完整時，都顯示�
     status: 'NOT_FOUND',
   });
   assert.equal((await failure(() => db.get('users/nobody'))).code, 'DATABASE_MISSING');
+  // 全新的專案（還沒建立資料庫）回報的是「API 尚未啟用」，狀態碼是 403
+  globalThis.fetch = reply(403, {
+    message: 'Cloud Firestore API has not been used in project example before or it is disabled.',
+    status: 'PERMISSION_DENIED',
+  });
+  const disabled = await failure(() => db.list('clubs'));
+  assert.equal(disabled.code, 'DATABASE_MISSING');
+  assert.match(disabled.message, /尚未建立 Firestore 資料庫/);
 });
