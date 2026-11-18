@@ -2,7 +2,7 @@
 
 這份文件從頭到尾走一次：把程式碼放上 GitHub、建立 Firebase 後端、把前端部署到 Vercel，最後建立第一個系統管理者。照順序做，每一步的最後都有「這樣就對了」的檢查方式。
 
-最後更新：2026-11-17。Firebase 與 Vercel 的選單名稱偶爾會調整；找不到按鈕時，以功能名稱（例如 Authentication、Environment Variables）在該網站搜尋。
+最後更新：2026-11-18。Firebase 與 Vercel 的選單名稱偶爾會調整；找不到按鈕時，以功能名稱（例如 Authentication、Environment Variables）在該網站搜尋。
 
 ## 架構
 
@@ -221,6 +221,7 @@ npx firebase deploy --only firestore:rules --project <你的專案 ID>
 ## 這份流程驗證到哪裡
 
 - **實際跑過**：在全新的資料夾執行 `npm install` 與 Vercel 環境的建置（Node.js 22、24、26）；用 Vercel CLI 的 `vercel build` 讀取 `vercel.json` 並產生輸出；缺少環境變數時建置失敗；正式模式的網頁會呼叫 Firebase 的正式端點，API Key 無效時顯示中文說明。
-- **沒有跑過**：第 3 到 6 步需要你的 Google 與 Vercel 帳號，沒有在真正的 Firebase 專案與 Vercel 專案上執行。規則只在本機模擬器驗證過。
+- **2026-11-18 實際走過一次**：組員照第 2 到 5 步把專案部署到 Vercel 與 Firebase，並建立了第一個系統管理者與社團。部署後的網站與 Firebase 專案另外做過唯讀檢查。
+- **還沒做**：第 6 步的上線後檢查清單沒有逐項確認；各角色的完整流程只在本機模擬器驗證過。
 
 細節見 [`TESTING.md`](TESTING.md)。

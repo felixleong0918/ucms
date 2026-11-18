@@ -1,6 +1,6 @@
 # 測試紀錄
 
-最後更新：2026-11-17（加入 Vercel 部署設定之後）。記錄已實際執行的驗證、執行環境，以及還沒驗證的部分。
+最後更新：2026-11-18（部署到 Vercel 與 Firebase 之後）。記錄已實際執行的驗證、執行環境，以及還沒驗證的部分。
 
 ## 執行環境
 
@@ -113,12 +113,20 @@
 
 第一項原本會在畫面上顯示成「你沒有此操作的權限」，容易誤導；已補上對應，現在顯示「這個 Firebase 專案尚未建立 Firestore 資料庫」，並加入單元測試。修改後重跑：`npm run format` 無變更、`npm test` 13 / 13、`npm run build` 通過、`npm run test:integration` 11 / 11（Node.js 22）。瀏覽器檢查這次沒有重跑。
 
+## 正式環境的檢查（2026-11-18）
+
+使用者已完成部署：前端在 Vercel（https://ucms-gamma.vercel.app/），後端是 Firebase 專案 `ucms-7a098`。以下檢查都沒有註冊帳號、沒有寫入資料。
+
+- **Firebase 專案**（直接呼叫 REST API）：Firestore 資料庫已建立；未登入可以讀取社團清單、讀取社團內部的任務與系統管理者清單會被拒絕（403），與 `firestore.rules` 一致；電子郵件／密碼登入已啟用。沒有逐條比對線上規則與檔案內容。
+- **Vercel 網站**（Chromium）：`config.js` 是正式模式並指向 `ucms-7a098`；登入頁正常顯示、沒有「本機模擬器模式」字樣、Noto Serif TC 有載入；以不存在的帳號登入顯示「帳號或密碼不正確」；公開活動頁成功讀到 Firestore；`vercel.json` 的三個回應標頭都有生效；手機寬度沒有水平溢出；沒有頁面錯誤。
+- **由使用者操作、從結果間接確認**：使用者註冊帳號、在 Firestore 建立 `admins/{UID}` 之後，公開的社團清單出現一個社團（三個模組都啟用）。建立社團需要通過系統管理者的規則，因此註冊、登入、系統管理者設定與寫入在正式環境上是通的。
+- 檢查當下線上的 `app.js` 不含「資料庫未建立時顯示明確訊息」的修改。原因是那次修改寫回使用者的資料夾時，`src/firebase.mjs` 寫入的是舊版，而測試檔是新版，所以 commit `e37e375` 的 `npm test` 會有一項失敗（12 / 13）。同日已補上正確的 `src/firebase.mjs`，並逐檔比對資料夾與測試過的版本一致（47 個檔案）。
+
 ## 尚未驗證
 
-- **正式 Firebase 專案**：沒有建立。安全規則只在模擬器驗證；真正的專案上的註冊、登入與讀寫沒有實測。
-- **Vercel 上的實際部署**：沒有登入 Vercel、沒有部署。只用 Vercel CLI 在本機建置，確認設定檔被接受且輸出正確。
-- **`docs/DEPLOY.md` 第 3 到 6 步**：需要 Google 與 Vercel 帳號，沒有實際操作。Firebase 與 Vercel 的選單名稱依 2026-11-17 查到的官方文件撰寫。
-- **macOS 本機**：以上都在 Linux 執行。Mac 需先安裝 JDK 21，再跑一次 `npm install`、`npm run doctor` 與 `npm run test:integration`。
+- **正式環境上的完整流程**：加入成員、各角色權限、公告、任務、會議、活動報名與簽到、財務、庫存、盲注計時、回饋、Excel 匯出，都沒有在正式環境上逐項操作。這些只在模擬器驗證過。
+- **線上規則與 `firestore.rules` 完全一致**：只用三個請求抽查。
+- **macOS 本機**：測試都在 Linux 執行。Mac 需先安裝 JDK 21，再跑一次 `npm install`、`npm run doctor` 與 `npm run test:integration`。
 - **Safari 與 Firefox**：只在 Chromium 測過。玻璃材質使用 `backdrop-filter`，Safari 已加上 `-webkit-` 前綴，但未實測。
 - **真實使用者驗收**：尚未請兩個受訪社團的幹部試用。
 

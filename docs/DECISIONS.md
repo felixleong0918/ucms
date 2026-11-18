@@ -1,6 +1,6 @@
 # UCMS 專案決策
 
-依據：《Web App Milestone 1 第 I 組專題報告》（Web app I組MS1.pdf）。最後更新：2026-11-17。
+依據：《Web App Milestone 1 第 I 組專題報告》（Web app I組MS1.pdf）。最後更新：2026-11-18。
 
 ## 範圍
 
@@ -82,5 +82,5 @@ Design Read
 
 - 11 項功能的頁面、路由、登入、社團切換與角色權限已整合，`npm run build` 通過。
 - 模擬器啟動、JDK 21 檢查、示範資料、單元測試與整合測試腳本已補齊。
-- Vercel 部署設定與部署步驟文件已完成；尚未在真正的 Firebase 專案與 Vercel 專案上部署。
+- 2026-11-18 由使用者完成部署：前端 https://ucms-gamma.vercel.app/ ，後端為 Firebase 專案 `ucms-7a098`，程式碼在 GitHub 的 `felixleong0918/ucms`。
 - 驗證進度與尚未完成的項目見 `docs/TESTING.md`。
