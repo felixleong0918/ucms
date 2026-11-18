@@ -1,0 +1,31 @@
+{
+  "name": "ucms",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "UCMS 大學社團整合管理平台 — React + Firebase",
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "doctor": "node scripts/doctor.mjs",
+    "dev": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "emulators": "node scripts/emulators.mjs",
+    "seed": "node scripts/seed.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:integration": "node scripts/emulators.mjs exec \"node --test tests/integration.mjs\"",
+    "format": "prettier --write \"src/**/*.{jsx,mjs,css}\" \"scripts/*.mjs\" \"tests/*.mjs\""
+  },
+  "engines": {
+    "node": ">=22 <27"
+  },
+  "dependencies": {
+    "jszip": "3.10.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "firebase-tools": "^15.36.0",
+    "prettier": "^3.10.1"
+  }
+}

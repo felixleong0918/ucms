@@ -1,0 +1,24 @@
+# 相依套件與建置輸出
+node_modules/
+dist/
+release/
+coverage/
+
+# 實際環境設定（請只提交 .env.example）
+.env
+.env.local
+
+# Firebase Emulator：資料、下載的模擬器與紀錄
+.emulator-data/
+.emulator-cache/
+.firebase/
+.firebase.no-ui.json
+*-debug.log
+*.log
+
+# Vercel CLI 的本機設定
+.vercel/
+
+# 本機工具產生的檔案
+.runtime/
+.DS_Store
